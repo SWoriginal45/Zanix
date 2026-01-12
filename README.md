@@ -1,1 +1,1 @@
-# Zanix
+# Zalyx
