@@ -11,7 +11,6 @@
       width: 100vw;
       height: 100vh;
       background: linear-gradient(30deg, #ffffff, #d8b4ff);
-
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -31,21 +30,13 @@
       padding: 14px 42px;
       font-size: 20px;
       border: none;
-      border-radius: 8px; /* menos arredondado */
+      border-radius: 8px;
       cursor: pointer;
-      background: #c084fc; /* mais claro */
+      background: #c084fc;
       color: white;
       font-weight: bold;
-      transition: 0.2s ease;
       box-shadow: 0 10px 25px rgba(168, 85, 247, 0.35);
     }
-
-    .button:hover {
-      transform: scale(1.05);
-      background: #a855f7;
-    }
-
-    /* ===== MODAL ===== */
 
     .modal {
       position: fixed;
@@ -53,14 +44,11 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-
       background: rgba(0, 0, 0, 0.35);
       backdrop-filter: blur(8px);
-
       display: flex;
       justify-content: center;
       align-items: center;
-
       opacity: 0;
       pointer-events: none;
       transition: 0.3s ease;
@@ -73,17 +61,16 @@
 
     .modal-content {
       background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
       padding: 40px;
       border-radius: 18px;
       width: 320px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
       text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
     }
 
     .modal-content h2 {
-      margin-bottom: 20px;
       color: #7c3aed;
+      margin-bottom: 20px;
     }
 
     .modal-content input {
@@ -92,7 +79,6 @@
       margin-bottom: 12px;
       border-radius: 8px;
       border: 1px solid #ccc;
-      font-size: 14px;
     }
 
     .modal-content button {
@@ -104,11 +90,13 @@
       color: white;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 10px;
     }
 
-    .modal-content button:hover {
-      background: #9333ea;
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+      display: none;
     }
   </style>
 </head>
@@ -116,19 +104,16 @@
 <body>
 
   <img src="logo.png" class="logo">
+  <button class="button" onclick="openModal()">Criar conta</button>
 
-  <button class="button" onclick="openModal()">
-    Criar conta
-  </button>
-
-  <!-- MENU -->
   <div class="modal" id="modal" onclick="closeModal(event)">
     <div class="modal-content">
       <h2>Criar conta</h2>
-      <input type="date" placeholder="Data de nascimento">
-      <input type="text" placeholder="Username">
-      <input type="password" placeholder="Senha">
-      <button>Criar</button>
+      <input type="date" id="date">
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Senha">
+      <button onclick="createAccount()">Criar</button>
+      <div class="error" id="error">Preencha todos os campos.</div>
     </div>
   </div>
 
@@ -139,6 +124,21 @@
 
     function closeModal(event) {
       if (event.target.classList.contains("modal")) {
+        document.getElementById("modal").classList.remove("active");
+      }
+    }
+
+    function createAccount() {
+      const date = document.getElementById("date").value;
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const error = document.getElementById("error");
+
+      if (date === "" || username === "" || password === "") {
+        error.style.display = "block";
+      } else {
+        error.style.display = "none";
+        alert("Conta criada com sucesso!");
         document.getElementById("modal").classList.remove("active");
       }
     }
